@@ -1,21 +1,21 @@
 <script setup>
-import  VueTableFlow  from "./vdt/FlowTable.vue";
+import  FlowTable  from "./vdt/FlowTable.vue";
+
 import { ref, onMounted, watch } from 'vue';
+
 const TableName = ref('Parent');
 const scrollTableHeader = ref({
-    'TableName': TableName.value, // (Importent for nested table other wise not required)
+    'TableName': TableName.value, // (Importent for nested table other wise not required & unique)
     'height': 'calc(100vh - 20px)',
-    "width": "1400px",
-    'headerBackgroundColor': '#417690',
+    "width": "2800px", // Required
+    'headerBackgroundColor': 'green',
     'headerColor': 'white',
-    // 'zebraStripe1': "blue",
-    // 'zebraStripe2': "orange",
+    'zebraStripe1': "#affddd",
+    'zebraStripe2': "#affdff",
     'style': {
-        'position': 'sticky',
-        'top': 0,
         'display': 'grid',
         'grid-template-columns': `100px 200px 300px 1fr 1fr 120px 100px 40px`,
-        // 'grid-template-rows': `50px`,
+        'grid-template-rows': `40px auto`,
     },
     'tableContent':[
         {'key': 'col1', 'value': 'Column 1', 'style': {'position': 'sticky', 'left': 0}},
@@ -26,11 +26,11 @@ const scrollTableHeader = ref({
         {'key': 'col4', 'value': 'Column 4', 'style':{'min-width': '250px'}},
         {'key': 'col5', 'value': 'Column 5', 'style':{'min-width': '250px'}},
         {'key': 'col6', 'value': 'Column 6'},
-        {'key': 'col7', 'value': 'Column 7'},
+        {'key': 'col7', 'value': 'Column 7', 'style': {'position': 'sticky', 'right': `40px`}},
         {
             'key': 'action', 
             'value': true,
-            'style': {'position': 'sticky', 'right': 0}
+            'style': {'position': 'sticky', 'right': 0,}
         },
     ]
 })
@@ -73,33 +73,30 @@ const popUpMenuItem = ref([
     },
 ])
 
-const actinRespose = (e)=>{
-    /* ( slot name definition=> id_TableName )  
-    id=data id,
-    TableName = TableName
-    */
-    console.warn(slotName.value)
-    // console.warn(`${e.data.id}_${TableName.value}`)
-    slotName.value = `${e.data.id}_${TableName.value}`;
-    // console.warn(active)
-    console.warn(slotName.value)
+const actionRespose = (e)=>{
+    // slotName.value = `${e.data.id}_${TableName.value}`;
+    console.warn(e)
+    slotName.value = e.slotName;
 }
 
-let slotName = ref();
+let slotName = ref('');
 </script>
 
 <template>
   <div class="ExampleBody">
-    <VueTableFlow
+    <FlowTable
+        @FlowTableResponse="actionRespose"
+    >
+    <!-- <VueTableFlow
     :tableHeaderContent="scrollTableHeader"
     :tableDataContent="tableDataContent"
     :popUpMenuItem="popUpMenuItem"
-    @vueTableFlowResponse="actinRespose"
-    >
+    @vueTableFlowResponse="actionRespose"
+    > -->
     
     <template v-slot:[slotName]>
-        <div>
-            Test Child...
+        <div style="height: 400px; position: sticky; left: 1000px;">
+            Test Child... {{ slotName }}
         </div>
     </template>
         <!-- <template v-slot:[dyNamic]>
@@ -113,7 +110,7 @@ let slotName = ref();
             </div>
             defaultcontent
         </template> -->
-    </VueTableFlow>
+    </FlowTable>
   </div>
 </template>
 

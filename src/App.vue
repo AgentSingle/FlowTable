@@ -1,12 +1,12 @@
 <script setup>
-import Dev from './components/Dev.vue';
-// import Test from './components/Test.vue';
+// import Dev from './components/Dev.vue';
+import Test from './components/Test.vue';
 </script>
 
 
 <template>
-    <Dev></Dev>
-    <!-- <Test></Test> -->
+    <!-- <Dev></Dev> -->
+    <Test></Test>
 </template>
 
 
@@ -18,7 +18,5 @@ import Dev from './components/Dev.vue';
   width: calc(100% - 20px);
   height: calc(100% - 20px);
   padding: 10px;
-  justify-content: flex-start;
-  overflow: hidden;
 }
 </style>

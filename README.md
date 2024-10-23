@@ -16,12 +16,32 @@
 
 
 ☸**2.** IMPORT flowtable INTO YOUR WORKING FILE (Eg. App.vue):
+```html 
+<script setup>
 ```
+```javascript
 import { FlowTable } from "flowtable"
 import "flowtable/style.css"
+const actionResponse = (e)=>{}
+```
+```html 
+<script>
 ```
 
-☸**3.** follow github Readme.md t:
+☸**3.** Now Use It In Your Working File:
+
+```html 
+<template>
+```
+```html
+    <FlowTable @FlowTableResponse="actionResponse">
+    </FlowTable>
+```
+```html 
+<template>
+```
+
+☸**4.** follow github Readme.md t:
 <h2>
   <a href="https://github.com/AgentSingle/FlowTable/blob/master/.github/README.md" target="_blank">
   🔆**Details How To Use (GITHUB)**
