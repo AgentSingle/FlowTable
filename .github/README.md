@@ -3,7 +3,7 @@
 </h1>
 
 <h2>🔆
-  <a href="https://www.npmjs.com/package/vuetableflow" target="_blank">
+  <a href="https://www.npmjs.com/package/flowtable" target="_blank">
   npm Link
   </a>
 </h2>
