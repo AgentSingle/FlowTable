@@ -1,5 +1,5 @@
 <h1 align="center">
-  Welcome To "VueTableFlow"
+  Welcome To "FlowTable"
 </h1>
 
 <h2>🔆
@@ -8,19 +8,19 @@
   </a>
 </h2>
 
-<h2 align="center">**HOW TO USE: "vuetableflow"**</h2>
+<h2 align="center">**HOW TO USE: "flowtable"**</h2>
 
 ☸**1.** ADD PLUGIN INTO YOUR PROJECT [latest version]:
 
   ```
-  npm i vuetableflow
+  npm i flowtable
   ```
 
 
-☸**2.** IMPORT vuetableflow INTO YOUR WORKING FILE (Eg. App.vue):
+☸**2.** IMPORT flowtable INTO YOUR WORKING FILE (Eg. App.vue):
 ```
-import { VueTableFlow } from "vuetableflow"
-import "vuetableflow/style.css"
+import { flowtable } from "flowtable"
+import "flowtable/style.css"
 ```
 
 

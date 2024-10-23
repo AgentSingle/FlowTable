@@ -1,12 +1,12 @@
 <script setup>
-// import Dev from './components/Dev.vue';
-import Test from './components/Test.vue';
+import Dev from './components/Dev.vue';
+// import Test from './components/Test.vue';
 </script>
 
 
 <template>
-    <!-- <Dev></Dev> -->
-    <Test></Test>
+    <Dev></Dev>
+    <!-- <Test></Test> -->
 </template>
 
 
