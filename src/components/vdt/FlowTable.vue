@@ -1,12 +1,17 @@
 <script setup>
 import { ref, onMounted, watch, defineEmits } from 'vue';
 import ClickIcon from './IconClick.vue';
+import { tableHeaderExample, tableBodyExample, popUpMenuItemExample } from './flowTableData.js';
+
 const props = defineProps({
     tableHeaderContent: Object,
     tableDataContent: Array,
     popUpMenuItem: Array
 })
-const emit = defineEmits(['vueTableFlowResponse'])
+const tableHeaderContentMain = ref(null);
+const tableDataContentMain = ref([]);
+const popUpMenuItemMain = ref([]);
+const emit = defineEmits(['FlowTableResponse'])
 
 let tableName = ref('default');
 let zebraStripe1 = ref('#dedede');
@@ -21,18 +26,31 @@ let dataObj = ref({});
 let popupButtonStyle = ref([]);
 
 onMounted(()=>{
+    if (props.tableHeaderContent==undefined){
+        tableHeaderContentMain.value = tableHeaderExample;
+        tableDataContentMain.value = tableBodyExample(30);
+        popUpMenuItemMain.value = popUpMenuItemExample;
+    }
+    if (props.tableHeaderContent!=undefined){
+        tableHeaderContentMain.value = props.tableHeaderContent;
+        tableDataContentMain.value = props.tableDataContent;
+        popUpMenuItemMain.value = props.popUpMenuItem;
+
+        if(props.tableHeaderContent.TableName!=undefined){
+            tableName.value = props.tableHeaderContent.TableName;
+        }
+        if(props.tableHeaderContent.zebraStripe1!=undefined){
+            zebraStripe1.value = props.tableHeaderContent.zebraStripe1;
+        }
+        if(props.tableHeaderContent.zebraStripe2!=undefined){
+            zebraStripe2.value = props.tableHeaderContent.zebraStripe2;
+        }
+    }
+
+
     window.addEventListener('resize', ()=>{
         deacitvatePopUp();
     });
-    if(props.tableHeaderContent.TableName!=undefined){
-        tableName.value = props.tableHeaderContent.TableName;
-    }
-    if(props.tableHeaderContent.zebraStripe1!=undefined){
-        zebraStripe1.value = props.tableHeaderContent.zebraStripe1;
-    }
-    if(props.tableHeaderContent.zebraStripe2!=undefined){
-        zebraStripe2.value = props.tableHeaderContent.zebraStripe2;
-    }
 })
 
 watch(ScrollTablePopUpRectangle, ()=>{
@@ -65,18 +83,19 @@ const PopUpActionTaken = (e)=>{
     deacitvatePopUp();
     let data = {
         'action': e.value,
-        'data': dataObj.value
+        'data': dataObj.value,
+        'slotName': `${dataObj.value.id}_${tableName.value}`
     }
-    emit('vueTableFlowResponse', data);
+    emit('FlowTableResponse', data);
 }
 
 const deacitvatePopUp = ()=>{
     isActionPopUpVisible.value=false;
     ScrollTablePopUpRectangle.value = null;
     popupButtonStyle.value = [];
-    for (let i=0; i<props.popUpMenuItem.length; i++){
+    for (let i=0; i<popUpMenuItemMain.length; i++){
         let obj = {
-            'background': `${props.popUpMenuItem[i].bg}`,
+            'background': `${popUpMenuItemMain[i].bg}`,
             '-webkit-background-clip': 'text',
             '-webkit-text-fill-color': 'transparent',
         }
@@ -88,29 +107,31 @@ const deacitvatePopUp = ()=>{
 
 
 <template>
-    <div class="ScrollableTableWrapper">
-        <div class="ScrollableTableBody" :style="{'max-height': props.tableHeaderContent.height}"
+    <div v-if="tableHeaderContentMain!=null" class="ScrollableTableWrapper">
+        <div class="ScrollableTableBody" :style="{'max-height': tableHeaderContentMain.height}"
         ref="ScrollableTableBody">
             
             <!-- TABLE HEADER  -->
             <div class="ScrollableTableHeader" 
                 :style="[
-                    props.tableHeaderContent.style,
                     {
-                        'background-color': `${props.tableHeaderContent.headerBackgroundColor}`,
-                        'color': `${props.tableHeaderContent.headerColor}`,
-                        'min-width': `${props.tableHeaderContent.width}`,
-                    }
+                        'background-color': `${tableHeaderContentMain.headerBackgroundColor}`,
+                        'color': `${tableHeaderContentMain.headerColor}`,
+                        'min-width': `${tableHeaderContentMain.width}`,
+                        'position': 'sticky',
+                        'top': 0,
+                    },
+                    tableHeaderContentMain.style,
                 ]"
             >
                 <!-- TABLE HEADER CONTENTS -->
                 <div 
-                    v-for="content in tableHeaderContent.tableContent"
+                    v-for="content in tableHeaderContentMain.tableContent"
                     class="ScrollableTableHeaderContent"
                     :style="[
                         content.style, 
                         {
-                            'background-color': `${props.tableHeaderContent.headerBackgroundColor}`,
+                            'background-color': `${tableHeaderContentMain.headerBackgroundColor}`,
                         }
                     ]"
                 >   
@@ -128,14 +149,14 @@ const deacitvatePopUp = ()=>{
             <div 
             class="ScrollableTableListContent"
             :style="[
-                props.tableHeaderContent.style,
-                {'min-width': `${props.tableHeaderContent.width}`,}
+                tableHeaderContentMain.style,
+                {'min-width': `${tableHeaderContentMain.width}`,}
             ]"
-            v-for="item, index in tableDataContent" v-bind:key="item.id">
+            v-for="item, index in tableDataContentMain" v-bind:key="item.id">
 
                 <!-- TABLE DATA LIST CONTENTS -->
                 <div 
-                    v-for="content, rowIndex in tableHeaderContent.tableContent"
+                    v-for="content, rowIndex in tableHeaderContentMain.tableContent"
                     :class="['ScrollTableContent']"
                     :style="[content.style, {'background-color': `${(index%2==0)?zebraStripe1:zebraStripe2}`}]"
                 >
@@ -143,7 +164,10 @@ const deacitvatePopUp = ()=>{
                     <div v-if="content.key=='action'" 
                         class="ScrollTableActionElement" style="overflow: visible;" 
                         :id="`col_${index}_row${rowIndex}_name${tableName}`"
-                        v-on:click="actionInitiated(item, `col_${index}_row${rowIndex}_name${tableName}`)"
+                        v-on:click="actionInitiated(
+                            item,
+                            `col_${index}_row${rowIndex}_name${tableName}`
+                        )"
                     >
                         <div class="ScrollActionElipsis"></div>
                     </div>
@@ -151,7 +175,6 @@ const deacitvatePopUp = ()=>{
                         {{ item[content.key] }}
                     </p>
                 </div>
-
 
                 <!-- ADITIONAL TABLE CONTENT -->
                 <div
@@ -161,7 +184,7 @@ const deacitvatePopUp = ()=>{
                             'position': 'sticky',
                             'left': 0,
                             'background-color': 'white', 
-                            'min-width': `${props.tableHeaderContent.width}`,
+                            'min-width': `${tableHeaderContentMain.width}`,
                         }
                     ]"
                 >
@@ -178,7 +201,7 @@ const deacitvatePopUp = ()=>{
         <div class="ScrollTableActionPopUpBlanket" @click="deacitvatePopUp">
         </div>
         <div class="ScrollTableActionPopUpWrapper" ref="ScrollTablePopUpRectangle">
-            <div v-for="item, popupBtnIndex in popUpMenuItem" :key="item.id" 
+            <div v-for="item, popupBtnIndex in popUpMenuItemMain" :key="item.id" 
                 @click="PopUpActionTaken(item)" 
                 :style="[item.style, popupButtonStyle[popupBtnIndex]]"
                 @mouseout="popupButtonStyle[popupBtnIndex]={

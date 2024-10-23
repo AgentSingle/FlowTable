@@ -33,6 +33,7 @@ const scrollTableHeader = ref({
     /* TableName (Importent for nested table otherwise not required)  */
     'TableName': TableName.value,
     'height': '95vh', // Required
+    "width": "1400px", // Required
     'headerBackgroundColor': '#417690', // Required
     'headerColor': 'white', // Required
     // 'zebraStripe1': "blue", // odd row background color
@@ -40,11 +41,10 @@ const scrollTableHeader = ref({
     /* describe grid according to your requirements 
     [other style are your choice]  */
     'style': {
-        'position': 'sticky', // Required
-        'top': 0, // Required
-        'min-width': '1400px', // Required
         'display': 'grid', // Required
-        'grid-template-columns': `100px 200px 300px 1fr 1fr 120px 100px 40px`, // Required
+        /* Required (define your table header content width according to your requirements as below) */
+        'grid-template-columns': `100px 200px 300px 1fr 1fr 120px 100px 40px`,
+        'grid-template-rows': `40px auto`,
     },
     /* describe grid according to your requirements */
     'tableContent':[
@@ -135,7 +135,7 @@ const popUpMenuItem = ref([
 
 
 const actionRespose = (e)=>{
-    console.warn(e)
+    console.warn(e);
 }
 ```
 
@@ -153,12 +153,16 @@ const actionRespose = (e)=>{
 ☸**3** MAKING NESTED TABLE:
 ```<script setup>```:
 ```javascript
-let slotName = ref();
 /* DONT FORGET (incase of nested table):
 in table header part REQUIRE: (TableName)
 in data set REQUIRE: (id)
 now your slotName.value = `${id}_${TableName}`
 */
+let slotName = ref();
+const actionRespose = (e)=>{
+    slotName.value = e.slotName;
+}
+  
 ```
 
 ```<template>```:

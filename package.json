@@ -1,6 +1,6 @@
 {
   "name": "flowtable",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "author": "Sudipta Mandal",
   "license": "MIT",
   "type": "module",
@@ -22,7 +22,7 @@
     "src/components/Dev.vue",
     "src/components/Test.vue",
     "src/main.js",
-    "public/vite.svg"
+    "dist/vite.svg"
   ],
   "scripts": {
     "dev": "vite",
