@@ -19,7 +19,7 @@
 
 ☸**2.** IMPORT flowtable INTO YOUR WORKING FILE (Eg. App.vue):
 ```
-import { flowtable } from "flowtable"
+import { FlowTable } from "flowtable"
 import "flowtable/style.css"
 ```
 
@@ -68,10 +68,10 @@ const scrollTableHeader = ref({
 ```
 ```<template>```:
 ```html
-<VueTableFlow
+<FlowTable
     :tableHeaderContent="scrollTableHeader"
 >
-</VueTableFlow>
+</FlowTable>
 ```
 
 
@@ -102,11 +102,11 @@ onMounted(()=>{
 ```
 ```<template>```:
 ```html
-<VueTableFlow
+<FlowTable
     :tableHeaderContent="scrollTableHeader"
     :tableDataContent="tableDataContent"
 >
-</VueTableFlow>
+</FlowTable>
 ```
 
 
@@ -141,13 +141,13 @@ const actionRespose = (e)=>{
 
 ```<template>```:
 ```html
-<VueTableFlow
+<FlowTable
     :tableHeaderContent="scrollTableHeader"
     :tableDataContent="tableDataContent"
     :popUpMenuItem="popUpMenuItem"
     @vueTableFlowResponse="actinRespose"
 >
-</VueTableFlow>
+</FlowTable>
 ```
 
 ☸**3** MAKING NESTED TABLE:
@@ -163,7 +163,7 @@ now your slotName.value = `${id}_${TableName}`
 
 ```<template>```:
 ```html
-<VueTableFlow
+<FlowTable
     :tableHeaderContent="scrollTableHeader"
     :tableDataContent="tableDataContent"
     :popUpMenuItem="popUpMenuItem"
@@ -173,6 +173,6 @@ now your slotName.value = `${id}_${TableName}`
             Test Child
         </div>
     </template>
-</VueTableFlow>
+</FlowTable>
 ```
 

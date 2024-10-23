@@ -17,7 +17,7 @@
 
 ☸**2.** IMPORT flowtable INTO YOUR WORKING FILE (Eg. App.vue):
 ```
-import { flowtable } from "flowtable"
+import { FlowTable } from "flowtable"
 import "flowtable/style.css"
 ```
 
