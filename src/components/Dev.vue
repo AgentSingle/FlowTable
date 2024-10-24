@@ -7,7 +7,7 @@ const TableName = ref('Parent');
 const scrollTableHeader = ref({
     'TableName': TableName.value, // (Importent for nested table other wise not required & unique)
     'height': 'calc(100vh - 20px)',
-    "width": "2800px", // Required
+    "width": "1800px", // Required
     'headerBackgroundColor': 'green',
     'headerColor': 'white',
     'zebraStripe1': "#affddd",
@@ -52,6 +52,18 @@ onMounted(()=>{
         };
         tableDataContent.value.push(obj);
     }
+    let data = {
+        'id': null, // REQUIRED FOR ACTION OTHER WISE NOT REQUIRED
+        'col1': `1`,
+        'col2': `2`,
+        'col3': `3`,
+        'col4': `4`,
+        'col5': `5`,
+        'col6': `6`,
+        'col7': `7`,
+        'action': false,
+    }
+    tableDataContent.value.push(data);
     // console.warn(tableDataContent.value);
 })
 
@@ -84,15 +96,15 @@ let slotName = ref('');
 
 <template>
   <div class="ExampleBody">
-    <FlowTable
+    <!-- <FlowTable
         @FlowTableResponse="actionRespose"
-    >
-    <!-- <VueTableFlow
+    > -->
+    <FlowTable
     :tableHeaderContent="scrollTableHeader"
     :tableDataContent="tableDataContent"
     :popUpMenuItem="popUpMenuItem"
-    @vueTableFlowResponse="actionRespose"
-    > -->
+    @FlowTableResponse="actionRespose"
+    >
     
     <template v-slot:[slotName]>
         <div style="height: 400px; position: sticky; left: 1000px;">
