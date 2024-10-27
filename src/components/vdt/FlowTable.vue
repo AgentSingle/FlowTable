@@ -26,6 +26,14 @@ let dataObj = ref({});
 let popupButtonStyle = ref([]);
 
 onMounted(()=>{
+    rectifyTableData();
+})
+
+watch(props, ()=>{
+    rectifyTableData();
+})
+
+const rectifyTableData = ()=>{
     if (props.tableHeaderContent==undefined){
         tableHeaderContentMain.value = tableHeaderExample;
         tableDataContentMain.value = tableBodyExample(30);
@@ -51,7 +59,8 @@ onMounted(()=>{
     window.addEventListener('resize', ()=>{
         deacitvatePopUp();
     });
-})
+}
+
 
 watch(ScrollTablePopUpRectangle, ()=>{
     let popup = ScrollTablePopUpRectangle.value;

@@ -35,7 +35,7 @@ const scrollTableHeader = ref({
     ]
 })
 
-const tableDataContent = ref([]);
+let tableDataContent = ref([]);
 
 onMounted(()=>{
     for (let i = 1; i <= 50; i++) {
@@ -65,6 +65,26 @@ onMounted(()=>{
     }
     tableDataContent.value.push(data);
     // console.warn(tableDataContent.value);
+
+    setTimeout(() => {
+        // console.warn('time out')
+        tableDataContent.value = [];
+        for (let j = 1; j <= 10; j++) {
+            let obj = {
+                'id': j, // REQUIRED FOR ACTION OTHER WISE NOT REQUIRED
+                'col1': `${j}, 1`,
+                'col2': `${j}, 2`,
+                'col3': `${j}, 3`,
+                'col4': `${j}, 4`,
+                'col5': `${j}, 5`,
+                'col6': `${j}, 6`,
+                'col7': `${j}, 7`,
+                'action': true,
+            };
+            tableDataContent.value.push(obj);
+        }
+        // console.warn(tableDataContent.value)
+    }, 5000);
 })
 
 const popUpMenuItem = ref([
@@ -100,10 +120,10 @@ let slotName = ref('');
         @FlowTableResponse="actionRespose"
     > -->
     <FlowTable
-    :tableHeaderContent="scrollTableHeader"
-    :tableDataContent="tableDataContent"
-    :popUpMenuItem="popUpMenuItem"
-    @FlowTableResponse="actionRespose"
+        :tableHeaderContent="scrollTableHeader"
+        :tableDataContent="tableDataContent"
+        :popUpMenuItem="popUpMenuItem"
+        @FlowTableResponse="actionRespose"
     >
     
     <template v-slot:[slotName]>
