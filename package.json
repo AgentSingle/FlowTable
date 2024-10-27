@@ -1,8 +1,12 @@
 {
   "name": "flowtable",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "author": "Sudipta Mandal",
   "license": "MIT",
+  "keywords": [
+    "flowtable",
+    "FlowTable"
+  ],
   "type": "module",
   "files": [
     "dist",

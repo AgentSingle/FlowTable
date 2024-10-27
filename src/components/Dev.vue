@@ -7,7 +7,7 @@ const TableName = ref('Parent');
 const scrollTableHeader = ref({
     'TableName': TableName.value, // (Importent for nested table other wise not required & unique)
     'height': 'calc(100vh - 20px)',
-    "width": "2800px", // Required
+    "width": "1800px", // Required
     'headerBackgroundColor': 'green',
     'headerColor': 'white',
     'zebraStripe1': "#affddd",
@@ -35,7 +35,7 @@ const scrollTableHeader = ref({
     ]
 })
 
-const tableDataContent = ref([]);
+let tableDataContent = ref([]);
 
 onMounted(()=>{
     for (let i = 1; i <= 50; i++) {
@@ -52,7 +52,39 @@ onMounted(()=>{
         };
         tableDataContent.value.push(obj);
     }
+    let data = {
+        'id': null, // REQUIRED FOR ACTION OTHER WISE NOT REQUIRED
+        'col1': `1`,
+        'col2': `2`,
+        'col3': `3`,
+        'col4': `4`,
+        'col5': `5`,
+        'col6': `6`,
+        'col7': `7`,
+        'action': false,
+    }
+    tableDataContent.value.push(data);
     // console.warn(tableDataContent.value);
+
+    setTimeout(() => {
+        // console.warn('time out')
+        tableDataContent.value = [];
+        for (let j = 1; j <= 10; j++) {
+            let obj = {
+                'id': j, // REQUIRED FOR ACTION OTHER WISE NOT REQUIRED
+                'col1': `${j}, 1`,
+                'col2': `${j}, 2`,
+                'col3': `${j}, 3`,
+                'col4': `${j}, 4`,
+                'col5': `${j}, 5`,
+                'col6': `${j}, 6`,
+                'col7': `${j}, 7`,
+                'action': true,
+            };
+            tableDataContent.value.push(obj);
+        }
+        // console.warn(tableDataContent.value)
+    }, 5000);
 })
 
 const popUpMenuItem = ref([
@@ -84,15 +116,15 @@ let slotName = ref('');
 
 <template>
   <div class="ExampleBody">
+    <!-- <FlowTable
+        @FlowTableResponse="actionRespose"
+    > -->
     <FlowTable
+        :tableHeaderContent="scrollTableHeader"
+        :tableDataContent="tableDataContent"
+        :popUpMenuItem="popUpMenuItem"
         @FlowTableResponse="actionRespose"
     >
-    <!-- <VueTableFlow
-    :tableHeaderContent="scrollTableHeader"
-    :tableDataContent="tableDataContent"
-    :popUpMenuItem="popUpMenuItem"
-    @vueTableFlowResponse="actionRespose"
-    > -->
     
     <template v-slot:[slotName]>
         <div style="height: 400px; position: sticky; left: 1000px;">

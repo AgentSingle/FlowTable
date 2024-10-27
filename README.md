@@ -1,5 +1,5 @@
 <h1 align="center">
-  Welcome To "VueTableFlow"
+  Welcome To "FlowTable"
 </h1>
 
 <!-- <h2 align="center">

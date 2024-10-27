@@ -26,6 +26,14 @@ let dataObj = ref({});
 let popupButtonStyle = ref([]);
 
 onMounted(()=>{
+    rectifyTableData();
+})
+
+watch(props, ()=>{
+    rectifyTableData();
+})
+
+const rectifyTableData = ()=>{
     if (props.tableHeaderContent==undefined){
         tableHeaderContentMain.value = tableHeaderExample;
         tableDataContentMain.value = tableBodyExample(30);
@@ -51,7 +59,8 @@ onMounted(()=>{
     window.addEventListener('resize', ()=>{
         deacitvatePopUp();
     });
-})
+}
+
 
 watch(ScrollTablePopUpRectangle, ()=>{
     let popup = ScrollTablePopUpRectangle.value;
@@ -158,10 +167,13 @@ const deacitvatePopUp = ()=>{
                 <div 
                     v-for="content, rowIndex in tableHeaderContentMain.tableContent"
                     :class="['ScrollTableContent']"
-                    :style="[content.style, {'background-color': `${(index%2==0)?zebraStripe1:zebraStripe2}`}]"
+                    :style="[
+                        content.style, 
+                        {'background-color': `${(index%2==0)?zebraStripe1:zebraStripe2}`}
+                    ]"
                 >
                     <!-- IF ACTION ITEM IS PRESENT THEN THIS IS VISIBLE OR HIDDEN -->
-                    <div v-if="content.key=='action'" 
+                    <div v-if="content.key=='action' & item[content.key]" 
                         class="ScrollTableActionElement" style="overflow: visible;" 
                         :id="`col_${index}_row${rowIndex}_name${tableName}`"
                         v-on:click="actionInitiated(
@@ -171,6 +183,8 @@ const deacitvatePopUp = ()=>{
                     >
                         <div class="ScrollActionElipsis"></div>
                     </div>
+                    <p v-else-if="!item[content.key]" style="font-size: 16px;">
+                    </p>
                     <p v-else style="font-size: 16px;">
                         {{ item[content.key] }}
                     </p>
